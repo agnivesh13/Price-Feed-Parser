@@ -21,34 +21,12 @@ End-to-end data pipeline that:
 ---
 
 ## Architecture
-┌─────────────┐ GET /oauth/callback ┌──────────────┐
-│ Browser ├──────────────────────────▶│ API Gateway │
-└─────────────┘ └──────┬───────┘
-│ (AWS_PROXY)
-┌─────▼──────┐
-│ OAuth Lmda │──┐
-└─────┬──────┘ │ exchange auth_code
-│ │ store tokens
-Secrets Manager ◀─┘
-│
-┌──────────────────────┴─────────────────────┐
-│ Ingest Lambda (async, aiohttp) │
-EventBridge (schedule) ─┤ • reads tickers from S3 (config) │
-│ • rate limits + retries + refresh │
-└───────────┬────────────────────────────────┘
-│ raw JSON
-┌──▼────────────────────────────────────┐
-│ S3 (raw bucket) │
-│ ohlcv/raw/… & ohlcv/errors/… │
-└──┬───────────────────────────────────┬─┘
-│ │
-│ Glue Job │
-│ (daily IST, dynamic date) │
-▼ │
-┌──────────────────────┐ │
-│ S3 (processed) │◀────────────────────┘
-│ parquet partitions │
-└──────────────────────┘
+
+Below is the architecture diagram of the system:
+
+![Architecture Diagram](docs/architecture.png)
+
+This architecture describes how the data flows from API Gateway (OAuth) to Lambda and Glue for processing.
 
 
 ### S3 path conventions
