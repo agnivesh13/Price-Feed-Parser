@@ -1,4 +1,4 @@
-# Price Feed Parser (AWS + Fyers) 📈
+# Price Feed Parser (AWS + Fyers) 
 
 [![Deploy](https://img.shields.io/badge/CI-CD-blue)](.github/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
