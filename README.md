@@ -43,7 +43,7 @@ This architecture describes how the data flows from API Gateway (OAuth) to Lambd
 ---
 
 ## What’s in this repo
-
+```
 .
 ├─ .github/workflows/deploy.yml # CI/CD (Terraform deploy)
 ├─ config/
@@ -65,7 +65,7 @@ This architecture describes how the data flows from API Gateway (OAuth) to Lambd
 ├─ .gitignore
 ├─ LICENSE
 └─ README.md
-
+```
 
 ---
 
