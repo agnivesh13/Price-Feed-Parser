@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+
+      - name: Package Lambdas
+        run: |
+          bash scripts/package_lambda.sh
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-south-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+
+      - name: Terraform Init/Apply
+        working-directory: infra/terraform
+        env:
+          TF_VAR_project_name: ${{ secrets.TF_PROJECT_NAME }}
+          TF_VAR_owner_tag: ${{ secrets.TF_OWNER_TAG }}
+          TF_VAR_fyers_client_id: ${{ secrets.TF_FYERS_CLIENT_ID }}
+          TF_VAR_fyers_secret_key: ${{ secrets.TF_FYERS_SECRET_KEY }}
+          TF_VAR_redirect_url: ${{ secrets.TF_REDIRECT_URL }}
+        run: |
+          terraform init -input=false
+          terraform apply -auto-approve -input=false

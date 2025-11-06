@@ -1,0 +1,4 @@
+arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-p312-requests:18	
+
+#requests	
+#2.32.5
