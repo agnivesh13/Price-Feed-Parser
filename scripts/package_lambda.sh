@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-TARGET_DIR="lambdas/oauth_gateway"
+TARGET_DIR="lambda/callback_handler"
 if [ ! -d "$TARGET_DIR" ]; then
   echo "Directory $TARGET_DIR does not exist. Aborting."
   exit 1
